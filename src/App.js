@@ -1,13 +1,10 @@
 import "./App.css";
-import { WordleGame } from "./features/WordleV2";
-import Wordle from "./features/Wordle";
-import { WordleProvider } from "./context/WordleContext.js";
+import Wordle from "./features/Wordle.jsx";
 
 function App() {
   return (
-    <div className="App contianer">
+    <div className="App contianer bg-site bg-no-repeat bg-cover overflow-hidden h-svh">
       <Wordle />
-      {/* <WordleGame /> */}
     </div>
   );
 }

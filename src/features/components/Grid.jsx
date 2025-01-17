@@ -3,10 +3,9 @@ import { useWordle } from "../../context/WordleContext";
 
 const Cell = ({ content, feedback }) => (
   <div
-    className={`cell flex items-center justify-center border border-gray-400 text-lg font-bold ${
-      feedback || "bg-white"
+    className={`cell flex items-center justify-center border border-appPurple text-3xl sm:text-lg md:text-2xl font-tertiary w-20 sm:w-16 md:w-20 h-20 sm:h-16 md:h-20 text-appPurple ${
+      feedback || "bg-appLightGray"
     }`}
-    style={{ width: "64px", height: "64px" }}
   >
     {content}
   </div>
@@ -24,7 +23,7 @@ export const Grid = () => {
   const { guesses, validatedRows, WORD_LENGTH, MAX_ATTEMPTS } = useWordle();
 
   return (
-    <div className="grid grid-rows-6 grid-cols-5 gap-1 justify-center mt-4">
+    <div className={`grid grid-rows-${MAX_ATTEMPTS} grid-cols-${WORD_LENGTH} justify-center mt-4`}>
       {Array.from({ length: MAX_ATTEMPTS }).map((_, i) => {
         const guess = guesses[i] || "";
         const feedback = validatedRows[i] || [];
