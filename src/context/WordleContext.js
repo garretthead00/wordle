@@ -2,7 +2,6 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import {
@@ -25,7 +24,8 @@ export const WordleProvider = ({ children }) => {
     incorrectKeys: [],
   });
 
-  const solution = TARGET_WORD;
+
+  const [solution, setSolution] = useState('')
 
   const getFeedback = (guess) => {
     const feedback = Array(WORD_LENGTH).fill("");
@@ -104,6 +104,7 @@ export const WordleProvider = ({ children }) => {
         validatedRows,
         WORD_LENGTH,
         MAX_ATTEMPTS,
+        setSolution
       }}
     >
       {children}
