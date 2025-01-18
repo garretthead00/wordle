@@ -16,8 +16,8 @@ const Wordle = () => {
   }, [setSolution]);
 
   return (
-    <div className="wordle-game flex flex-col items-center mt-10 min-w-[360px]">
-      <h1 className="text-3xl font-bold mb-4 text-appDarkGold font-primary">
+    <div className="wordle-game flex flex-col mt-4 items-center min-w-[360px]">
+      <h1 className="text-3xl font-bold m-1 text-appDarkGold font-primary">
         Wordle Game
       </h1>
       <Grid />
