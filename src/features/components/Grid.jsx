@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Cell = ({ content, feedback, animate, index }) => (
   <motion.div
-    className={`cell flex items-center justify-center border border-appPurple text-3xl sm:text-lg md:text-2xl font-tertiary w-20 sm:w-16 md:w-20 h-20 sm:h-16 md:h-20 text-appPurple ${"bg-appLightGray"}`}
+    className={`cell flex items-center justify-center border border-appPurple text-3xl sm:text-lg md:text-2xl font-tertiary w-20 sm:w-16 md:w-20 h-20 sm:h-16 md:h-20 text-appPurple bg-appLightGray`}
     animate={animate && { rotateX: [0, 90, 0], backgroundColor: feedback }}
     transition={{ duration: 0.5, delay: index * 0.2 }}
   >
@@ -19,7 +19,7 @@ const GridRow = ({ guess, feedback, wordLength, isCurrentRow }) => (
         key={j}
         content={guess[j] || ""}
         feedback={feedback[j]}
-        animate={isCurrentRow && !!feedback[j]}
+        animate={(feedback[j])}
         index={j}
       />
     ))}

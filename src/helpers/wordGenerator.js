@@ -13,6 +13,5 @@ const wordList = [
   
 export const generateRandomWord = () => {
     const randomIndex = Math.floor(Math.random() * wordList.length);
-    console.log('random word', wordList[randomIndex])
     return wordList[randomIndex];
 }

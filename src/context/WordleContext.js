@@ -1,5 +1,7 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
 import { GAME_STATUS, MAX_ATTEMPTS, WORD_LENGTH } from "../helpers/constants";
+import { generateRandomWord } from "../helpers/wordGenerator";
+
 
 export const WordleContext = createContext({});
 
@@ -14,7 +16,7 @@ export const WordleProvider = ({ children }) => {
     incorrectKeys: [],
   });
 
-  const [solution, setSolution] = useState("");
+  const [solution, setSolution] = useState('');
 
   const getFeedback = (guess) => {
     const feedback = Array(WORD_LENGTH).fill("");
@@ -40,7 +42,6 @@ export const WordleProvider = ({ children }) => {
         }));
       }
     }
-
     return feedback;
   };
 
@@ -83,7 +84,7 @@ export const WordleProvider = ({ children }) => {
   }, [guesses, solution]);
 
   const resetGame = () => {
-    setSolution("");
+    setSolution(generateRandomWord());
     setGuesses([]);
     setCurrentGuess("");
     setValidatedRows([]);
