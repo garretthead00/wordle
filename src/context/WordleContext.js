@@ -1,15 +1,5 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
-import {
-  GAME_STATUS,
-  MAX_ATTEMPTS,
-  WORD_LENGTH,
-  TARGET_WORD,
-} from "../helpers/constants";
+import React, { createContext, useCallback, useContext, useState } from "react";
+import { GAME_STATUS, MAX_ATTEMPTS, WORD_LENGTH } from "../helpers/constants";
 
 export const WordleContext = createContext({});
 
@@ -24,27 +14,26 @@ export const WordleProvider = ({ children }) => {
     incorrectKeys: [],
   });
 
-
-  const [solution, setSolution] = useState('')
+  const [solution, setSolution] = useState("");
 
   const getFeedback = (guess) => {
     const feedback = Array(WORD_LENGTH).fill("");
 
     for (let i = 0; i < WORD_LENGTH; i++) {
       if (guess[i] === solution[i]) {
-        feedback[i] = "bg-green-500";
+        feedback[i] = "#22c55e";
         setValidatedKeys((prevState) => ({
           ...prevState,
           correctKeys: [...prevState.correctKeys, guess[i]],
         }));
       } else if (solution.includes(guess[i])) {
-        feedback[i] = "bg-yellow-500";
+        feedback[i] = "#eab308";
         setValidatedKeys((prevState) => ({
           ...prevState,
           misplacedKeys: [...prevState.misplacedKeys, guess[i]],
         }));
       } else {
-        feedback[i] = "bg-gray-400";
+        feedback[i] = "#9ca3af";
         setValidatedKeys((prevState) => ({
           ...prevState,
           incorrectKeys: [...prevState.incorrectKeys, guess[i]],
@@ -93,6 +82,19 @@ export const WordleProvider = ({ children }) => {
     }
   }, [guesses, solution]);
 
+  const resetGame = () => {
+    setSolution("");
+    setGuesses([]);
+    setCurrentGuess("");
+    setValidatedRows([]);
+    setGameStatus(GAME_STATUS.PLAYING);
+    setValidatedKeys({
+      misplacedKeys: [],
+      correctKeys: [],
+      incorrectKeys: [],
+    });
+  };
+
   return (
     <WordleContext.Provider
       value={{
@@ -104,7 +106,8 @@ export const WordleProvider = ({ children }) => {
         validatedRows,
         WORD_LENGTH,
         MAX_ATTEMPTS,
-        setSolution
+        setSolution,
+        resetGame,
       }}
     >
       {children}

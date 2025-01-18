@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { GameBanner, Grid, Keyboard } from "./components";
 import { GAME_STATUS } from "../helpers/constants";
 import { generateRandomWord } from "../helpers/wordGenerator";
@@ -8,11 +8,15 @@ const Wordle = () => {
   const { gameStatus, setSolution } = useWordle();
 
   useEffect(() => {
-    if (setSolution) {
-      const targetWord = generateRandomWord();
-      setSolution(targetWord);
-    }
+    const targetWord = generateRandomWord();
+    setSolution(targetWord);
   }, [setSolution]);
+
+  useCallback(() => {
+    if (gameStatus) {
+      console.log("gameStatus: ", gameStatus);
+    }
+  }, [gameStatus]);
 
   return (
     <div className="wordle-game flex flex-col items-center mt-10 min-w-[360px]">
