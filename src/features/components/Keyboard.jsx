@@ -7,15 +7,19 @@ const Key = ({ keyLabel }) => {
 
   return (
     <button
-      className={`key p-2 sm:p-0 rounded font-secondary text-2xl sm:text-[16px] md:text-xl text-white justify-center ${
-        isSpecialKey ? "w-20 sm:w-12 md:w-16 lg:w-20" : "w-12 h-12 sm:w-8 md:w-10 lg:w-14 sm:h-8 md:h-10 lg:h-12"
-      } ${validatedKeys.correctKeys.includes(keyLabel)
-        ? "bg-green-500"
-        : validatedKeys.misplacedKeys.includes(keyLabel)
-        ? "bg-yellow-500"
-        : validatedKeys.incorrectKeys.includes(keyLabel)
-        ? "bg-gray-400"
-        : "bg-gray-700"}`}
+      className={`key flex p-2 sm:p-0 rounded font-secondary text-2xl sm:text-[16px] md:text-xl text-white justify-center items-center ${
+        isSpecialKey
+          ? "w-20 sm:w-14 md:w-16 lg:w-20"
+          : "w-12 sm:w-8 md:w-10 lg:w-14 h-12 sm:h-10 md:h-10 lg:h-12"
+      } ${
+        validatedKeys.correctKeys.includes(keyLabel)
+          ? "bg-green-500"
+          : validatedKeys.misplacedKeys.includes(keyLabel)
+          ? "bg-yellow-500"
+          : validatedKeys.incorrectKeys.includes(keyLabel)
+          ? "bg-gray-400"
+          : "bg-gray-700"
+      }`}
       onClick={() => handleKeyPress(keyLabel)}
     >
       {keyLabel}

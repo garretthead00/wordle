@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   GAME_STATUS,
   MAX_ATTEMPTS,
@@ -11,41 +17,41 @@ export const WordleContext = createContext({});
 export const WordleProvider = ({ children }) => {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState("");
-  const [solution] = useState(TARGET_WORD); // Example solution word
   const [validatedRows, setValidatedRows] = useState([]);
   const [gameStatus, setGameStatus] = useState(GAME_STATUS.PLAYING);
-
   const [validatedKeys, setValidatedKeys] = useState({
     misplacedKeys: [],
     correctKeys: [],
     incorrectKeys: [],
   });
 
+  const solution = TARGET_WORD;
+
   const getFeedback = (guess) => {
     const feedback = Array(WORD_LENGTH).fill("");
-    
+
     for (let i = 0; i < WORD_LENGTH; i++) {
       if (guess[i] === solution[i]) {
         feedback[i] = "bg-green-500";
         setValidatedKeys((prevState) => ({
-            ...prevState,
-            correctKeys: [...prevState.correctKeys, guess[i]],
-          }));
+          ...prevState,
+          correctKeys: [...prevState.correctKeys, guess[i]],
+        }));
       } else if (solution.includes(guess[i])) {
         feedback[i] = "bg-yellow-500";
         setValidatedKeys((prevState) => ({
-            ...prevState,
-            misplacedKeys: [...prevState.misplacedKeys, guess[i]],
-          }));
+          ...prevState,
+          misplacedKeys: [...prevState.misplacedKeys, guess[i]],
+        }));
       } else {
         feedback[i] = "bg-gray-400";
         setValidatedKeys((prevState) => ({
-            ...prevState,
-            incorrectKeys: [...prevState.incorrectKeys, guess[i]],
-          }));
+          ...prevState,
+          incorrectKeys: [...prevState.incorrectKeys, guess[i]],
+        }));
       }
     }
-    
+
     return feedback;
   };
 
@@ -55,7 +61,6 @@ export const WordleProvider = ({ children }) => {
       setValidatedRows([...validatedRows, newValidatedRow]);
       setCurrentGuess("");
       updateGameStatus();
-      console.log("keys", { validatedKeys, currentGuess });
     } else if (key === "Delete" && currentGuess.length > 0) {
       guesses.splice(-1);
       const updatedGuess = currentGuess.slice(0, -1);
@@ -66,7 +71,7 @@ export const WordleProvider = ({ children }) => {
     } else if (
       key.length === 1 &&
       currentGuess.length < WORD_LENGTH &&
-      guesses.length < MAX_ATTEMPTS
+      guesses.length <= MAX_ATTEMPTS
     ) {
       if (currentGuess.length > 0) {
         guesses.splice(-1);
@@ -77,21 +82,22 @@ export const WordleProvider = ({ children }) => {
     }
   };
 
-  const updateGameStatus = () => {
-    if (validatedRows.length === MAX_ATTEMPTS) {
+  const updateGameStatus = useCallback(() => {
+    if (guesses.length === MAX_ATTEMPTS) {
       setGameStatus(GAME_STATUS.LOST);
+    } else {
+      const lastFeedback = guesses[guesses.length - 1];
+      if (lastFeedback && lastFeedback === solution) {
+        setGameStatus(GAME_STATUS.WON);
+      }
     }
-
-    const lastFeedback = guesses[guesses.length - 1];
-    if (lastFeedback && lastFeedback === solution) {
-      setGameStatus(GAME_STATUS.WON);
-    }
-  };
+  }, [guesses, solution]);
 
   return (
     <WordleContext.Provider
       value={{
         validatedKeys,
+        gameStatus,
         guesses,
         currentGuess,
         handleKeyPress,

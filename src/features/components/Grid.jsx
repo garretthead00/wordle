@@ -23,7 +23,9 @@ export const Grid = () => {
   const { guesses, validatedRows, WORD_LENGTH, MAX_ATTEMPTS } = useWordle();
 
   return (
-    <div className={`grid grid-rows-${MAX_ATTEMPTS} grid-cols-${WORD_LENGTH} justify-center mt-4`}>
+    <div
+      className={`grid grid-rows-${MAX_ATTEMPTS} grid-cols-${WORD_LENGTH} justify-center mt-4`}
+    >
       {Array.from({ length: MAX_ATTEMPTS }).map((_, i) => {
         const guess = guesses[i] || "";
         const feedback = validatedRows[i] || [];

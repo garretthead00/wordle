@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx}",
   ],
   theme: {
     fontFamily: {
@@ -11,7 +11,7 @@ module.exports = {
     },
     container: {
       padding: {
-        DEFAULT: '15px',
+        default: '16px',
       },
     },
     screens: {
