@@ -1,6 +1,7 @@
 {
   "name": "wordle",
   "version": "0.1.0",
+  "homepage": "https://garretthead00.github.io/wordle",
   "private": true,
   "dependencies": {
     "@types/react": "^19.0.7",
